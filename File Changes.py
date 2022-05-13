@@ -19,7 +19,7 @@ print(f"Select your files\n{17*'*'}")
 for nu,file in enumerate(files):
     print(f"{nu}. {file}")
 
-df = files[int(input("\nSelect sentiment dedup : "))]
+df = files[int(input("\nSelect main file : "))]
 print(f"Sentiment dedup = {df}\n")
 
 kw_df = files[int(input("Select keyword file : "))]
@@ -149,9 +149,8 @@ def keepAction(df,row):
 
 
 #Reading df
-print(f'Reading sentiment dedup')
+print(f'Reading main file')
 df = pd.read_csv(df,low_memory=False)
-df['Og Sentence'] = df['Sentence'].copy()
 
 
 for col in filter_columns:
@@ -175,8 +174,6 @@ if kw_df.shape[0] > 0:
             logs.append(log)
             print(log)
 
-df['Sentence'] = df['Og Sentence']
-df.drop(columns=['Og Sentence'],inplace=True)
 df.to_csv("Cleaned df.csv",index=False)
 pd.DataFrame(logs,columns=kw_df.columns.insert(1,"Rows Changed")).to_csv("log.csv",index=False)
 
